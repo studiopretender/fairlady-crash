@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
@@ -80,6 +81,12 @@ p {
   color: var(--muted);
   font-size: 13px;
   font-weight: 900;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
 }
 
 .nav a {
@@ -928,7 +935,7 @@ h1 {
 }
 
 .portal-card-about {
-  object-position: center 40%;
+  object-position: center top;
 }
 
 .portal-card-story {
@@ -940,7 +947,7 @@ h1 {
 }
 
 .portal-card-world {
-  object-position: center 28%;
+  object-position: center 20%;
 }
 
 .portal-card-contents {
@@ -958,7 +965,7 @@ h1 {
 
 .portal-feature-card .portal-card-image {
   aspect-ratio: 16 / 7;
-  object-position: center 42%;
+  object-position: center 30%;
 }
 
 .episode-card dl {
@@ -1015,7 +1022,7 @@ h1 {
   background:
     linear-gradient(0deg, rgba(5, 6, 21, 0.9), rgba(5, 6, 21, 0.48) 48%, rgba(5, 6, 21, 0.2)),
     linear-gradient(90deg, rgba(5, 6, 21, 0.82), rgba(5, 6, 21, 0.32) 58%, rgba(5, 6, 21, 0.08)),
-    url("assets/img/main-visual.jpg") center / cover no-repeat;
+    url("assets/img/main-visual.jpg") center 24% / cover no-repeat;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
@@ -1202,11 +1209,18 @@ h1 {
   .site-header {
     align-items: flex-start;
     flex-direction: column;
+    gap: 10px;
+    padding-top: 12px;
+    padding-bottom: 10px;
   }
 
   .nav {
     width: 100%;
-    padding-bottom: 2px;
+    padding-bottom: 4px;
+  }
+
+  .nav a {
+    padding: 6px 0 6px;
   }
 
   .portal-grid,
@@ -1229,11 +1243,11 @@ h1 {
   }
 
   .portal-card-grid {
-    gap: 24px;
+    gap: 16px;
   }
 
   .portal-card-grid .portal-link-card {
-    min-height: min(78svh, 640px);
+    min-height: 0;
     display: flex;
     flex-direction: column;
   }
@@ -1244,12 +1258,17 @@ h1 {
   }
 
   .portal-card-grid .portal-link-card strong {
-    margin-top: auto;
-    font-size: clamp(32px, 12vw, 48px);
+    margin-top: 0;
+    font-size: clamp(28px, 9vw, 38px);
   }
 
   .portal-card-grid .portal-link-card span {
+    margin-top: 8px;
     font-size: 15px;
+  }
+
+  .portal-card-grid .portal-feature-card .portal-card-image {
+    aspect-ratio: 16 / 9;
   }
 
   .hero-actions {
@@ -1261,11 +1280,49 @@ h1 {
   }
 
   .visual-hero {
-    padding-top: 58vh;
+    display: grid;
+    min-height: auto;
+    align-items: stretch;
+    justify-content: stretch;
+    padding: 0 0 clamp(22px, 6vw, 34px);
+    overflow: visible;
+  }
+
+  .visual-hero .hero-bg {
+    position: relative;
+    inset: auto;
+    z-index: 0;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
   }
 
   .visual-hero .hero-bg img {
-    object-position: center top;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .visual-hero::before,
+  .visual-hero::after {
+    display: none;
+  }
+
+  .visual-hero .content-stack {
+    width: calc(100% - 28px);
+    margin: 14px auto 0;
+    padding: 16px 12px;
+  }
+
+  .visual-hero .wire-row {
+    display: grid;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .visual-hero .wire-button {
+    width: 100%;
   }
 
   .visual-hero .content-stack h1 {
@@ -1273,7 +1330,7 @@ h1 {
     font-size: clamp(32px, 10vw, 48px);
   }
 
-.visual-hero .content-panel {
+  .visual-hero .content-panel {
     font-size: 14px;
   }
 
@@ -1355,6 +1412,11 @@ body::before {
 .nav a:hover {
   color: #fff;
   border-color: var(--gold);
+}
+
+.nav a[aria-current="page"] {
+  color: #fff;
+  border-color: var(--red);
 }
 
 .portal-hero,
@@ -1533,7 +1595,7 @@ body::before {
   background:
     linear-gradient(0deg, rgba(5, 6, 21, 0.9), rgba(5, 6, 21, 0.5) 48%, rgba(5, 6, 21, 0.18)),
     linear-gradient(90deg, rgba(5, 6, 21, 0.82), rgba(5, 6, 21, 0.34) 58%, rgba(5, 6, 21, 0.08)),
-    url("assets/img/main-visual.jpg") center / cover no-repeat;
+    url("assets/img/main-visual.jpg") center 24% / cover no-repeat;
   border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
@@ -1676,14 +1738,14 @@ body::before {
   overflow: hidden;
   background:
     linear-gradient(0deg, #050615 0%, rgba(5, 6, 21, 0.9) 16%, rgba(5, 6, 21, 0.54) 30%, rgba(5, 6, 21, 0.12) 50%, rgba(5, 6, 21, 0) 100%),
-    url("assets/img/about-drama.jpg") center top / auto 118% no-repeat,
+    url("assets/img/about-drama.jpg") center top / cover no-repeat,
     #050615;
 }
 
 .world-cinematic-hero {
   background:
     linear-gradient(0deg, #050615 0%, rgba(5, 6, 21, 0.9) 16%, rgba(5, 6, 21, 0.54) 30%, rgba(5, 6, 21, 0.12) 50%, rgba(5, 6, 21, 0) 100%),
-    url("assets/img/world-visual.jpg") center top / auto 118% no-repeat,
+    url("assets/img/world-visual.jpg") center top / cover no-repeat,
     #050615;
 }
 
@@ -1738,6 +1800,35 @@ body::before {
     min-height: 520px;
     background-position: center top;
   }
+
+  .about-cinematic-hero:not(.world-cinematic-hero):not(.contents-cinematic-hero) {
+    min-height: auto;
+    display: grid;
+    align-items: end;
+    padding: min(132vw, 640px) 14px 18px;
+    background:
+      linear-gradient(0deg, #050615 0%, rgba(5, 6, 21, 0.9) 18%, rgba(5, 6, 21, 0.34) 35%, rgba(5, 6, 21, 0) 54%),
+      url("assets/img/about-drama.jpg") center top / 100% auto no-repeat,
+      #050615;
+  }
+
+  .about-cinematic-hero:not(.world-cinematic-hero):not(.contents-cinematic-hero)::before {
+    display: none;
+  }
+
+  .about-cinematic-copy {
+    gap: 10px;
+  }
+
+  .about-cinematic-copy h1 {
+    white-space: normal;
+    font-size: clamp(30px, 9vw, 42px);
+  }
+
+  .about-cinematic-copy .content-panel {
+    padding: 14px;
+    background: rgba(5, 6, 21, 0.58);
+  }
 }
 
 @media (max-width: 900px) {
@@ -1754,14 +1845,14 @@ body::before {
     min-height: 900px;
     background:
       linear-gradient(0deg, #050615 0%, rgba(5, 6, 21, 0.93) 20%, rgba(5, 6, 21, 0.62) 36%, rgba(5, 6, 21, 0.12) 62%, rgba(5, 6, 21, 0.02) 100%),
-      url("assets/img/about-drama.jpg") center top / auto 88% no-repeat,
+      url("assets/img/about-drama.jpg") center top / cover no-repeat,
       #050615;
   }
 
   .world-cinematic-hero {
     background:
       linear-gradient(0deg, #050615 0%, rgba(5, 6, 21, 0.93) 20%, rgba(5, 6, 21, 0.62) 36%, rgba(5, 6, 21, 0.12) 62%, rgba(5, 6, 21, 0.02) 100%),
-      url("assets/img/world-visual.jpg") center top / auto 88% no-repeat,
+      url("assets/img/world-visual.jpg") center top / cover no-repeat,
       #050615;
   }
 
@@ -1770,7 +1861,7 @@ body::before {
     padding-top: 430px;
     background:
       linear-gradient(0deg, #050615 0%, rgba(5, 6, 21, 0.92) 22%, rgba(5, 6, 21, 0.54) 42%, rgba(5, 6, 21, 0.08) 70%, rgba(5, 6, 21, 0.02) 100%),
-      url("assets/img/contents-visual.jpg") center center / cover no-repeat,
+      url("assets/img/contents-visual.jpg") 30% center / cover no-repeat,
       #050615;
   }
 
@@ -2072,8 +2163,8 @@ body::before {
   margin: 0 0 8px;
   color: #fff;
   font-size: clamp(18px, 1.55vw, 25px);
-  line-height: 1.12;
-  white-space: nowrap;
+  line-height: 1.22;
+  white-space: normal;
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 26px rgba(255, 46, 46, 0.4);
 }
 
@@ -2241,8 +2332,9 @@ body::before {
 
 @media (max-width: 680px) {
   .project-visual-card {
-    min-height: 560px;
-    padding: 340px 14px 14px;
+    min-height: auto;
+    aspect-ratio: 16 / 9;
+    padding: 14px;
   }
 
   .project-card-about::before,
@@ -2254,6 +2346,23 @@ body::before {
 
   .project-text-panel {
     justify-self: start;
+    align-self: end;
+    width: min(88%, 430px);
+    padding: 10px 12px;
+  }
+
+  .project-card-contents .project-text-panel,
+  .project-card-stance .project-text-panel {
+    justify-self: end;
+  }
+
+  .project-visual-card h2 {
+    font-size: clamp(18px, 5.2vw, 24px);
+  }
+
+  .project-visual-card p {
+    font-size: 12px;
+    line-height: 1.55;
   }
 }
 
@@ -2322,4 +2431,145 @@ body::before {
     0 0 28px rgba(255, 46, 46, 0.52),
     0 0 42px rgba(0, 200, 255, 0.36),
     0 8px 30px rgba(0, 0, 0, 0.68);
+}
+
+/* Gallery lightbox */
+.no-scroll {
+  overflow: hidden;
+}
+
+.gallery-tile {
+  cursor: zoom-in;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 40px);
+  background: rgba(3, 4, 14, 0.88);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-image {
+  max-width: min(94vw, 1100px);
+  max-height: 86vh;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6), 0 0 60px rgba(0, 200, 255, 0.18);
+  transform: scale(0.96);
+  transition: transform 0.25s ease;
+  cursor: zoom-out;
+}
+
+.lightbox.is-open .lightbox-image {
+  transform: scale(1);
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: #fff;
+  font-size: 20px;
+  background: rgba(5, 6, 21, 0.66);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lightbox-close {
+  top: 14px;
+  right: 14px;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.lightbox-prev {
+  left: 10px;
+}
+
+.lightbox-next {
+  right: 10px;
+}
+
+/* One-line headings must never push layout beyond the screen */
+html,
+body {
+  overflow-x: clip;
+}
+
+.wire-section,
+.page-hero,
+.about-cinematic-copy,
+.story-copy,
+.visual-hero .content-stack {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.about-cinematic-copy h1,
+.about-intro h1,
+.teams-intro h1,
+.story-copy h1,
+.page-hero h1,
+.visual-hero .content-stack h1,
+.content-card h2,
+.project-visual-card h2 {
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Keep item headings on one line on small screens */
+@media (max-width: 680px) {
+  .content-card h2,
+  .project-visual-card h2 {
+    white-space: nowrap;
+    font-size: min(24px, calc(6.5vw - 6px));
+  }
+
+  .team-card h2 {
+    white-space: nowrap;
+    font-size: min(25px, calc(7.8vw - 7px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .contents-hub-card img,
+  .gallery-tile img,
+  .lightbox,
+  .lightbox-image {
+    transition: none;
+  }
 }
