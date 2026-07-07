@@ -92,9 +92,7 @@ function showChara(index) {
   [
     ["年齢", chara.age],
     ["身長・体型", chara.body],
-    ["戦闘スタイル", chara.style],
-    ["相性(有利)", chara.advantage],
-    ["相性(不利)", chara.disadvantage]
+    ["戦闘スタイル", chara.style]
   ].forEach(pair => {
     if (!pair[1]) {
       return;
@@ -108,33 +106,37 @@ function showChara(index) {
   });
   const sections = charaFloat.querySelector(".chara-sections");
   sections.innerHTML = "";
-  [
-    ["特性", chara.tokusei],
-    ["必殺技", chara.hissatsu],
-    ["超必殺技", chara.cho],
-    ["性格・特徴", chara.personality],
-    ["背景・才能", chara.background],
-    ["勝利演出", chara.victory],
-    ["プロフィール", chara.profile],
-    ["口癖", chara.kuse]
-  ].forEach(pair => {
-    if (!pair[1]) {
+  const addSection = (label, text, extraClass) => {
+    if (!text) {
       return;
     }
-    const label = document.createElement("div");
-    label.className = "chara-section-label";
-    label.textContent = pair[0];
-    sections.appendChild(label);
-    String(pair[1]).split("\n").forEach(line => {
+    const labelEl = document.createElement("div");
+    labelEl.className = "chara-section-label";
+    labelEl.textContent = label;
+    sections.appendChild(labelEl);
+    String(text).split("\n").forEach(line => {
       if (!line.trim()) {
         return;
       }
       const p = document.createElement("p");
-      p.className = "chara-section-text";
+      p.className = "chara-section-text" + (extraClass ? " " + extraClass : "");
       p.textContent = line;
       sections.appendChild(p);
     });
-  });
+  };
+  const wazaName = value => {
+    if (!value) {
+      return "";
+    }
+    const names = String(value).match(/【[^】]+】/g);
+    return names ? names.join("　") : String(value).split("\n")[0];
+  };
+  addSection("特性", wazaName(chara.tokusei), "chara-waza");
+  addSection("必殺技", wazaName(chara.hissatsu), "chara-waza");
+  addSection("超必殺技", wazaName(chara.cho), "chara-waza");
+  addSection("性格・特徴", chara.personality);
+  addSection("プロフィール", String(chara.profile || "").split("\n").map(v => v.trim()).filter(Boolean)[0] || "");
+  addSection("口癖", chara.kuse);
   charaFloat.querySelector(".chara-float-body").scrollTop = 0;
   history.replaceState(null, "", "#chara=" + chara.id);
 }
@@ -142,9 +144,7 @@ function showChara(index) {
 function closeChara() {
   charaFloat.classList.remove("is-open");
   history.replaceState(null, "", charaPrevHash || window.location.pathname + window.location.search);
-  if (!document.querySelector(".team-float.is-open")) {
-    document.body.classList.remove("no-scroll");
-  }
+  document.body.classList.remove("no-scroll");
   if (charaLastFocused) {
     charaLastFocused.focus();
   }
@@ -241,187 +241,63 @@ function openChara(list, index) {
   charaFloat.querySelector(".lightbox-close").focus();
 }
 
-// Team float: tap a team card to open the team's introduction panel.
+// Team member links: clicking a member name on a team card opens the profile.
 const teamCards = Array.from(document.querySelectorAll(".team-card"));
 
-if (teamCards.length) {
-  let teamIndex = 0;
-  let lastFocused = null;
-  let currentTeamSlug = "";
-
-  const teamFloat = document.createElement("div");
-  teamFloat.className = "team-float";
-  teamFloat.setAttribute("role", "dialog");
-  teamFloat.setAttribute("aria-modal", "true");
-  teamFloat.setAttribute("aria-label", "チーム詳細");
-  teamFloat.innerHTML =
-    '<button class="lightbox-close" type="button" aria-label="閉じる">&#10005;</button>' +
-    '<button class="lightbox-prev" type="button" aria-label="前のチーム">&#8249;</button>' +
-    '<button class="lightbox-next" type="button" aria-label="次のチーム">&#8250;</button>' +
-    '<article class="team-float-panel">' +
-    '<img class="team-float-image" alt="">' +
-    '<div class="team-float-body">' +
-    '<h2 class="team-float-name"></h2>' +
-    '<p class="team-float-tagline"></p>' +
-    '<p class="team-float-desc"></p>' +
-    '<div class="team-float-meta"></div>' +
-    "</div>" +
-    "</article>";
-  document.body.appendChild(teamFloat);
-
-  const floatImage = teamFloat.querySelector(".team-float-image");
-  const floatName = teamFloat.querySelector(".team-float-name");
-  const floatTagline = teamFloat.querySelector(".team-float-tagline");
-  const floatDesc = teamFloat.querySelector(".team-float-desc");
-  const floatMeta = teamFloat.querySelector(".team-float-meta");
-
-  const teamSlug = card => {
-    const src = card.querySelector(".team-image").getAttribute("src") || "";
-    const match = src.match(/([^/]+)\.(jpg|jpeg|png|webp)$/i);
-    return match ? match[1] : "";
-  };
-
-  const chipList = (label, values, extraClass) =>
-    '<div class="team-float-label">' + label + "</div>" +
-    '<div class="team-float-chips">' +
-    values.map(value => '<span class="team-float-chip ' + extraClass + '">' + value + "</span>").join("") +
-    "</div>";
-
-  const showTeam = index => {
-    teamIndex = (index + teamCards.length) % teamCards.length;
-    const card = teamCards[teamIndex];
-    const cardImage = card.querySelector(".team-image");
-    const slug = teamSlug(card);
-    floatImage.src = slug ? "assets/img/teams/" + slug + ".jpg" : cardImage.src;
-    floatImage.alt = cardImage.alt || "";
-    floatName.textContent = card.querySelector("h2").textContent;
-    floatTagline.textContent = card.querySelector("h3").textContent;
-    floatDesc.textContent = card.querySelector("p").textContent;
-    currentTeamSlug = slug;
-    const dds = card.querySelectorAll("dd");
-    let metaHtml = "";
-    if (dds[0]) {
-      const memberChips = dds[0].textContent.split("/").map(v => v.trim()).map(name => {
-        const hit = fcCharacters.find(chara => chara.name === name);
-        return hit
-          ? '<button type="button" class="team-float-chip member has-chara" data-chara="' + hit.id + '">' + name + "</button>"
-          : '<span class="team-float-chip member">' + name + "</span>";
-      }).join("");
-      metaHtml += '<div class="team-float-label">メンバー' +
-        (fcCharacters.length ? '<small class="team-float-hint">タップでプロフィール</small>' : "") +
-        '</div><div class="team-float-chips">' + memberChips + "</div>";
+if (teamCards.length && fcCharacters.length) {
+  teamCards.forEach(card => {
+    const memberDd = card.querySelector("dd");
+    if (!memberDd) {
+      return;
     }
-    if (dds[1]) {
-      metaHtml += chipList("チームテーマ", dds[1].textContent.split("/").map(v => v.trim()), "theme");
+    const names = memberDd.textContent.split("/").map(v => v.trim()).filter(Boolean);
+    memberDd.textContent = "";
+    memberDd.classList.add("member-links");
+    const memberDt = card.querySelector("dt");
+    if (memberDt) {
+      const hint = document.createElement("small");
+      hint.className = "member-hint";
+      hint.textContent = "タップで詳細";
+      memberDt.appendChild(hint);
     }
-    floatMeta.innerHTML = metaHtml;
-    if (slug) {
-      history.replaceState(null, "", "#team=" + slug);
-    }
-  };
-
-  const openTeam = index => {
-    lastFocused = document.activeElement;
-    showTeam(index);
-    teamFloat.classList.add("is-open");
-    document.body.classList.add("no-scroll");
-    teamFloat.querySelector(".lightbox-close").focus();
-  };
-
-  const closeTeam = () => {
-    teamFloat.classList.remove("is-open");
-    document.body.classList.remove("no-scroll");
-    history.replaceState(null, "", window.location.pathname + window.location.search);
-    if (lastFocused) {
-      lastFocused.focus();
-    }
-  };
-
-  teamCards.forEach((card, index) => {
-    card.setAttribute("tabindex", "0");
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-label", card.querySelector("h2").textContent + " の詳細を表示");
-    card.addEventListener("click", () => openTeam(index));
-    card.addEventListener("keydown", event => {
-      if (event.key === "Enter" || event.key === " ") {
-        event.preventDefault();
-        openTeam(index);
+    names.forEach(name => {
+      const hit = fcCharacters.find(chara => chara.name === name);
+      if (hit) {
+        const link = document.createElement("button");
+        link.type = "button";
+        link.className = "member-link";
+        link.setAttribute("aria-label", name + " のプロフィールを表示");
+        if (hit.image) {
+          const face = document.createElement("span");
+          face.className = "member-link-face";
+          const faceImg = document.createElement("img");
+          faceImg.src = hit.image;
+          faceImg.alt = "";
+          faceImg.loading = "lazy";
+          faceImg.decoding = "async";
+          face.appendChild(faceImg);
+          link.appendChild(face);
+        }
+        const nameSpan = document.createElement("span");
+        nameSpan.textContent = name;
+        link.appendChild(nameSpan);
+        const arrow = document.createElement("span");
+        arrow.className = "member-link-arrow";
+        arrow.textContent = "›";
+        link.appendChild(arrow);
+        link.addEventListener("click", () => {
+          const teamList = fcCharacters.filter(chara => chara.team === hit.team);
+          openChara(teamList, teamList.indexOf(hit));
+        });
+        memberDd.appendChild(link);
+      } else {
+        const plain = document.createElement("span");
+        plain.className = "member-link is-plain";
+        plain.textContent = name;
+        memberDd.appendChild(plain);
       }
     });
   });
-
-  teamFloat.querySelector(".lightbox-close").addEventListener("click", closeTeam);
-  teamFloat.querySelector(".lightbox-prev").addEventListener("click", event => {
-    event.stopPropagation();
-    showTeam(teamIndex - 1);
-  });
-  teamFloat.querySelector(".lightbox-next").addEventListener("click", event => {
-    event.stopPropagation();
-    showTeam(teamIndex + 1);
-  });
-  teamFloat.addEventListener("click", event => {
-    const trigger = event.target.closest("[data-chara]");
-    if (trigger) {
-      const teamList = fcCharacters.filter(chara => chara.team === currentTeamSlug);
-      const startIndex = teamList.findIndex(chara => chara.id === trigger.getAttribute("data-chara"));
-      if (startIndex >= 0) {
-        openChara(teamList, startIndex);
-      }
-      return;
-    }
-    if (event.target === teamFloat) {
-      closeTeam();
-    }
-  });
-
-  document.addEventListener("keydown", event => {
-    if (isCharaFloatOpen()) {
-      return;
-    }
-    if (!teamFloat.classList.contains("is-open")) {
-      return;
-    }
-    if (event.key === "Escape") {
-      closeTeam();
-    } else if (event.key === "ArrowLeft") {
-      showTeam(teamIndex - 1);
-    } else if (event.key === "ArrowRight") {
-      showTeam(teamIndex + 1);
-    }
-  });
-
-  let teamTouchX = 0;
-  let teamTouchY = 0;
-  teamFloat.addEventListener(
-    "touchstart",
-    event => {
-      teamTouchX = event.changedTouches[0].clientX;
-      teamTouchY = event.changedTouches[0].clientY;
-    },
-    { passive: true }
-  );
-  teamFloat.addEventListener(
-    "touchend",
-    event => {
-      if (isCharaFloatOpen()) {
-        return;
-      }
-      const deltaX = event.changedTouches[0].clientX - teamTouchX;
-      const deltaY = event.changedTouches[0].clientY - teamTouchY;
-      if (Math.abs(deltaX) > 56 && Math.abs(deltaX) > Math.abs(deltaY)) {
-        showTeam(teamIndex + (deltaX < 0 ? 1 : -1));
-      }
-    },
-    { passive: true }
-  );
-
-  const teamHash = window.location.hash.match(/^#team=(.+)$/);
-  if (teamHash) {
-    const startIndex = teamCards.findIndex(card => teamSlug(card) === decodeURIComponent(teamHash[1]));
-    if (startIndex >= 0) {
-      openTeam(startIndex);
-    }
-  }
 }
 
 // Gallery lightbox: tap a tile to view the image floating above the page.
