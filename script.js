@@ -137,6 +137,11 @@ function showChara(index) {
   addSection("性格・特徴", chara.personality);
   addSection("プロフィール", String(chara.profile || "").split("\n").map(v => v.trim()).filter(Boolean)[0] || "");
   addSection("口癖", chara.kuse);
+  const shareUrl = "https://studiopretender.github.io/fairlady-crash/chara/" + chara.id + ".html";
+  const shareText = "【" + chara.teamName + "】" + chara.name + " " + (chara.catch || "") + " #フェアレディクラッシュ";
+  charaFloat.querySelector(".chara-share-x").href =
+    "https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText) + "&url=" + encodeURIComponent(shareUrl);
+  charaFloat.querySelector(".chara-share-copy").dataset.url = shareUrl;
   charaFloat.querySelector(".chara-float-body").scrollTop = 0;
   history.replaceState(null, "", "#chara=" + chara.id);
 }
@@ -172,9 +177,26 @@ function buildCharaFloat() {
     '<p class="chara-float-catch"></p>' +
     '<dl class="chara-stats"></dl>' +
     '<div class="chara-sections"></div>' +
+    '<div class="chara-share">' +
+    '<a class="chara-share-x" target="_blank" rel="noreferrer">Xでシェア</a>' +
+    '<button class="chara-share-copy" type="button">リンクをコピー</button>' +
+    "</div>" +
     "</div>" +
     "</article>";
   document.body.appendChild(charaFloat);
+
+  const copyButton = charaFloat.querySelector(".chara-share-copy");
+  copyButton.addEventListener("click", () => {
+    if (!navigator.clipboard) {
+      return;
+    }
+    navigator.clipboard.writeText(copyButton.dataset.url || "").then(() => {
+      copyButton.textContent = "コピーしました！";
+      setTimeout(() => {
+        copyButton.textContent = "リンクをコピー";
+      }, 1600);
+    });
+  });
 
   charaFloat.querySelector(".lightbox-close").addEventListener("click", closeChara);
   charaFloat.querySelector(".lightbox-prev").addEventListener("click", event => {

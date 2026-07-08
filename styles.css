@@ -2760,6 +2760,43 @@ body::before {
   font-weight: 900;
 }
 
+.chara-share {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.chara-share-x,
+.chara-share-copy {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.chara-share-x {
+  background: linear-gradient(135deg, #f02a2a, #c90063 62%, #7a1cff);
+  border: 0;
+  box-shadow: 0 8px 22px rgba(255, 46, 46, 0.32);
+}
+
+.chara-share-copy {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.chara-share-copy:hover,
+.chara-share-x:hover {
+  filter: brightness(1.12);
+}
+
 .chara-catalog {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
