@@ -1924,7 +1924,7 @@ body::before {
 /* CONTENTS hub image cards */
 .contents-hub-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: clamp(14px, 2vw, 24px);
 }
 
