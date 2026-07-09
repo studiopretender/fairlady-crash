@@ -2799,8 +2799,33 @@ body::before {
 
 .chara-catalog {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 2vw, 24px);
+}
+
+.chara-team-heading {
+  margin: 30px 0 12px;
+  color: var(--gold);
+  font-size: clamp(18px, 2.2vw, 24px);
+  line-height: 1.3;
+}
+
+.chara-team-heading:first-of-type {
+  margin-top: 0;
+}
+
+a.chara-card {
+  color: inherit;
+  text-decoration: none;
+}
+
+.chara-card-catch {
+  display: block;
+  margin: 6px 10px 0;
+  color: #ffe9a8;
+  font-size: clamp(11px, 1.1vw, 14px);
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .chara-card {
@@ -2847,17 +2872,17 @@ body::before {
 
 .chara-card b {
   display: block;
-  margin: 12px 8px 2px;
+  margin: 14px 10px 2px;
   color: #fff;
-  font-size: 15px;
+  font-size: clamp(15px, 1.7vw, 22px);
   line-height: 1.3;
 }
 
 .chara-card-team {
   display: block;
-  margin: 0 8px;
+  margin: 0 10px;
   color: #9fb0e8;
-  font-size: 11px;
+  font-size: clamp(11px, 1vw, 13px);
   font-weight: 700;
 }
 
