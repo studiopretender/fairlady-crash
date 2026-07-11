@@ -478,6 +478,13 @@ h1 {
   text-decoration: none;
 }
 
+.footer-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: clamp(14px, 3vw, 26px);
+}
+
 .page {
   min-height: 70vh;
 }
