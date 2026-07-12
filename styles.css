@@ -3002,6 +3002,24 @@ a.chara-card {
   }
 }
 
+/* YouTube playlist embed */
+.video-embed {
+  max-width: 960px;
+  aspect-ratio: 16 / 9;
+  background: #050615;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--shadow), 0 0 42px rgba(0, 200, 255, 0.14);
+}
+
+.video-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
 /* One-line headings must never push layout beyond the screen */
 html,
 body {
