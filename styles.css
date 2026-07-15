@@ -3037,15 +3037,6 @@ a.chara-card {
   margin-top: 6px;
 }
 
-.news-list a {
-  color: #f5f7ff;
-  text-decoration: none;
-}
-
-.news-list a:hover {
-  color: var(--gold);
-}
-
 @media (max-width: 680px) {
   .reading-links {
     display: grid;
