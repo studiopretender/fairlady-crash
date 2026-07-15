@@ -3020,6 +3020,47 @@ a.chara-card {
   border: 0;
 }
 
+/* Beginner guide, main characters, news, spoiler note */
+.home-section-title {
+  margin: 0 0 14px;
+  color: #fff;
+  font-size: clamp(24px, 3.4vw, 40px);
+  line-height: 1.2;
+  text-shadow: 0 0 22px rgba(255, 46, 46, 0.4), 0 0 30px rgba(0, 200, 255, 0.3);
+}
+
+.reading-links {
+  margin-top: 6px;
+}
+
+.home-heroes {
+  margin-top: 6px;
+}
+
+.news-list a {
+  color: #f5f7ff;
+  text-decoration: none;
+}
+
+.news-list a:hover {
+  color: var(--gold);
+}
+
+@media (max-width: 680px) {
+  .reading-links {
+    display: grid;
+    gap: 10px;
+  }
+
+  .reading-links .wire-button {
+    width: 100%;
+  }
+
+  .home-heroes {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* One-line headings must never push layout beyond the screen */
 html,
 body {
