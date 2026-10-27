@@ -12,12 +12,12 @@
     </script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="『フェアレディクラッシュ』の音楽。作品の世界を彩る楽曲をYouTubeプレイリストで公開中。">
+    <meta name="description" content="王道アニソン風ロック、ダンスポップ、ジャズロック、幻想アンビエント、ゴシックメタル。『フェアレディクラッシュ』の個性豊かな5曲を、気分や好みから選んで聴けます。">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Fairlady Crash">
     <meta property="og:locale" content="ja_JP">
     <meta property="og:title" content="MUSIC | Fairlady Crash">
-    <meta property="og:description" content="『フェアレディクラッシュ』の音楽。作品の世界を彩る楽曲をYouTubeプレイリストで公開中。">
+    <meta property="og:description" content="王道アニソン風ロック、ダンスポップ、ジャズロック、幻想アンビエント、ゴシックメタル。『フェアレディクラッシュ』の個性豊かな5曲を、気分や好みから選んで聴けます。">
     <meta property="og:url" content="https://studiopretender.github.io/fairlady-crash/music.html">
     <meta property="og:image" content="https://studiopretender.github.io/fairlady-crash/assets/img/ogp/home.jpg">
     <meta property="og:image:width" content="1200">
@@ -25,6 +25,35 @@
     <meta name="twitter:card" content="summary_large_image">
     <title>MUSIC | Fairlady Crash</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+      .music-page .page-hero, .music-page .wire-section {
+        padding-inline: max(20px, calc((100% - 1040px) / 2));
+        padding-block: clamp(32px, 5vw, 64px);
+      }
+      .music-page .page-hero { min-height: 0; }
+      .music-page .page-hero p { font-size: clamp(16px, 2vw, 19px); }
+      .music-phrase { display: inline-block; }
+      .music-page .content-panel { width: 100%; max-width: none; }
+      .music-page h2 { margin: 0; font-size: clamp(23px, 3vw, 34px); line-height: 1.5; }
+      .music-selection-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+      .music-track { min-width: 0; display: flex; flex-direction: column; overflow: hidden; border: 1px solid rgba(255,255,255,.22); border-radius: 12px; background: rgba(5,6,21,.64); }
+      .music-track-copy { display: grid; align-content: start; gap: 10px; padding: clamp(20px, 3vw, 28px); flex: 1; }
+      .music-mood { width: fit-content; margin: 0; padding: 4px 10px; border-radius: 999px; background: rgba(255,212,0,.12); color: #ffd975; font-size: 13px; font-weight: 700; }
+      .music-track h3 { margin: 0; color: #fff; font-size: clamp(20px, 2.3vw, 25px); line-height: 1.5; overflow-wrap: anywhere; }
+      .music-genre { margin: 0; color: #90dbef; font-size: 14px; font-weight: 700; }
+      .music-description { margin: 0; color: #e3e6f1; font-size: 15px; line-height: 1.85; }
+      .music-page .music-track .video-embed { width: 100%; max-width: none; border: 0; border-radius: 0; box-shadow: none; }
+      .music-track-link { padding: 16px 24px; color: #fff; border-top: 1px solid rgba(255,255,255,.14); font-size: 14px; font-weight: 700; text-decoration: none; }
+      .music-track-link:hover { color: #ffd975; background: rgba(255,255,255,.06); }
+      .music-playlist { text-align: center; justify-items: center; }
+      .music-playlist p { max-width: 640px; margin: 0; color: #e3e6f1; }
+      .music-playlist .text-link { max-width: 100%; white-space: normal; text-align: center; }
+      .music-track-link:focus-visible, .music-playlist .text-link:focus-visible { outline: 3px solid #ffd400; outline-offset: -4px; }
+      @media (max-width: 680px) {
+        .music-selection-grid { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+        .music-playlist .text-link { width: 100%; }
+      }
+    </style>
     <link rel="canonical" href="https://studiopretender.github.io/fairlady-crash/music.html">
   </head>
   <body>
@@ -40,20 +69,85 @@
         <a href="contents.html">CONTENTS</a>
       </nav>
     </header>
-    <main class="page">
+    <main class="page music-page">
       <section class="page-hero compact content-page-head">
         <div class="wire-label">MUSIC</div>
         <h1>音楽</h1>
         <div class="content-panel narrow">
-          <p>『フェアレディクラッシュ』の楽曲をYouTubeプレイリストで公開しています。キャラクターとチームの世界を、音でも楽しんでください。</p>
+          <p>熱く、華やかに、クールに、ときにはダークに。まずは曲調の違う5曲から、好きなサウンドを見つけてください。</p>
         </div>
       </section>
-      <section class="section wire-section">
-        <div class="wire-label">PLAYLIST</div>
-        <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/videoseries?list=PLfXOoZ-F-gbA" title="音楽 / Music プレイリスト" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <section class="section wire-section" aria-labelledby="music-selection-title">
+        <div class="wire-label">PICK YOUR SOUND</div>
+        <h2 id="music-selection-title"><span class="music-phrase">今の気分で選ぶ、</span><span class="music-phrase">5つのサウンド。</span></h2>
+        <div class="music-selection-grid">
+          <article class="music-track" aria-labelledby="track-1">
+            <div class="music-track-copy">
+              <p class="music-mood">熱くなりたい</p>
+              <h3 id="track-1">ブレイブアベンジャーズ</h3>
+              <p class="music-genre">王道アニソン風ロック</p>
+              <p class="music-description">疾走するギターと力強い女性ボーカル。何度倒れても立ち上がる、主人公チームの一曲。</p>
+            </div>
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/9wYz7cestn0" title="ブレイブアベンジャーズ｜王道アニソン風ロック" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <a class="music-track-link" href="https://youtu.be/9wYz7cestn0" target="_blank" rel="noreferrer">YouTubeで聴く ↗</a>
+          </article>
+          <article class="music-track" aria-labelledby="track-2">
+            <div class="music-track-copy">
+              <p class="music-mood">踊れる曲が好き</p>
+              <h3 id="track-2">プリティクイーン</h3>
+              <p class="music-genre">K-pop風ダンスポップ</p>
+              <p class="music-description">華やかなシンセとダンスビート。三人のボーカルが、美とカリスマを力に変える。</p>
+            </div>
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/dwzhpXH6e0Y" title="プリティクイーン｜K-pop風ダンスポップ" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <a class="music-track-link" href="https://youtu.be/dwzhpXH6e0Y" target="_blank" rel="noreferrer">YouTubeで聴く ↗</a>
+          </article>
+          <article class="music-track" aria-labelledby="track-3">
+            <div class="music-track-copy">
+              <p class="music-mood">クールに聴きたい</p>
+              <h3 id="track-3">サンダーフォース</h3>
+              <p class="music-genre">ジャズロック</p>
+              <p class="music-description">重いウッドベースと行進のリズム。統率された部隊の緊張と闘志を描く、クールな一曲。</p>
+            </div>
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/k1DTJlz8Y2M" title="サンダーフォース｜ジャズロック" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <a class="music-track-link" href="https://youtu.be/k1DTJlz8Y2M" target="_blank" rel="noreferrer">YouTubeで聴く ↗</a>
+          </article>
+          <article class="music-track" aria-labelledby="track-4">
+            <div class="music-track-copy">
+              <p class="music-mood">幻想に浸りたい</p>
+              <h3 id="track-4">水幻 SUIGEN</h3>
+              <p class="music-genre">東洋幻想アンビエント</p>
+              <p class="music-description">静けさの向こうから、躍動するサビへ。水と幻惑の世界を描く幻想的なサウンド。</p>
+            </div>
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/yHMi-8xQJwI" title="水幻 SUIGEN｜東洋幻想アンビエント" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <a class="music-track-link" href="https://youtu.be/yHMi-8xQJwI" target="_blank" rel="noreferrer">YouTubeで聴く ↗</a>
+          </article>
+          <article class="music-track" aria-labelledby="track-5">
+            <div class="music-track-copy">
+              <p class="music-mood">ダークな世界へ</p>
+              <h3 id="track-5"><span class="music-phrase">ディストーション</span><span class="music-phrase">ドールズ</span></h3>
+              <p class="music-genre">ゴシックメタル</p>
+              <p class="music-description">オルガンと重いギター、囁きから激しいサビへ。美と狂気が交差する、悪役たちのテーマ。</p>
+            </div>
+            <div class="video-embed">
+              <iframe src="https://www.youtube.com/embed/g_qzIwjXKcc" title="ディストーションドールズ｜ゴシックメタル" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+            <a class="music-track-link" href="https://youtu.be/g_qzIwjXKcc" target="_blank" rel="noreferrer">YouTubeで聴く ↗</a>
+          </article>
         </div>
-        <a class="text-link" href="https://youtube.com/playlist?list=PLfXOoZ-F-gbA&si=E5SRQ1iqOcB9EEgF" target="_blank" rel="noreferrer">YouTubeでプレイリストを開く</a>
+      </section>
+      <section class="section wire-section music-playlist" aria-labelledby="more-music-title">
+        <div class="wire-label">MORE MUSIC</div>
+        <h2 id="more-music-title">ほかの曲も聴く</h2>
+        <p>気になるサウンドが見つかったら、再生リストへ。ほかのチームのテーマ曲も、続けて楽しめます。</p>
+        <a class="text-link" href="https://youtube.com/playlist?list=PLfXOoZ-F-gbA" target="_blank" rel="noreferrer">すべての曲を再生リストで聴く ↗</a>
       </section>
     </main>
     <footer class="footer"><p>Fairlady Crash</p><nav class="footer-links" aria-label="公式リンク"><a href="https://note.com/studiopretender" target="_blank" rel="noreferrer">note</a><a href="https://www.pixiv.net/users/127654276" target="_blank" rel="noreferrer">pixiv</a><a href="https://www.youtube.com/@fairladycrash" target="_blank" rel="noreferrer">YouTube</a><a href="guidelines.html">二次創作ガイドライン</a><a href="contact.html">お問い合わせ</a><a href="index.html">TOP</a></nav></footer>
